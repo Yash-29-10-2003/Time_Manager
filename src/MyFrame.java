@@ -21,6 +21,7 @@ public class MyFrame extends JFrame implements ActionListener {
     String day;
     String date;
     public static JButton addTaskButton;
+    public static String task;
     JButton clearAllButton;
     NewWindow taskWindow;
     JScrollPane scrollPane;
