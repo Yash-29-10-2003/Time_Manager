@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 //Main Screen of the Application
 public class MyFrame extends JFrame implements ActionListener {
@@ -10,7 +11,7 @@ public class MyFrame extends JFrame implements ActionListener {
     JPanel headingPanel;
     JLabel headingLabel;
     JPanel clockPanel;
-    JPanel tasksPanel;
+    public static JPanel tasksPanel;
     SimpleDateFormat timeFormat;
     SimpleDateFormat dayFormat;
     SimpleDateFormat dateFormat;
@@ -22,6 +23,9 @@ public class MyFrame extends JFrame implements ActionListener {
     String date;
     public static JButton addTaskButton;
     public static String task;
+    public static String priority;
+    public static Date deadline;
+    public static String taskType;
     JButton clearAllButton;
     NewWindow taskWindow;
     JScrollPane scrollPane;
@@ -72,12 +76,15 @@ public class MyFrame extends JFrame implements ActionListener {
 
         //=========================Tasks=========================//
         tasksPanel = new JPanel();
-        tasksPanel.setLayout(new FlowLayout());
-        tasksPanel.setBounds(40,160,655,450);
+        tasksPanel.setLayout(new BoxLayout(tasksPanel, BoxLayout.Y_AXIS));
+        //tasksPanel.setBounds(40,160,655,450);  //you don't need to put in bounds for task panel since we add this to scroll pane
         tasksPanel.setBackground(Color.BLACK);
+        tasksPanel.setMaximumSize(new Dimension(655, Integer.MAX_VALUE));
 
         scrollPane = new JScrollPane(tasksPanel);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(40,160,655,450);
+        scrollPane.setVisible(true);
         //=========================Tasks=========================//
 
         //========================Buttons========================//
@@ -110,8 +117,7 @@ public class MyFrame extends JFrame implements ActionListener {
         this.add(clockPanel);
         this.add(addTaskButton);
         this.add(clearAllButton);
-        this.add(tasksPanel);
-        this.getContentPane().add(scrollPane);
+        this.add(scrollPane);
 
         setTime();
     }
@@ -133,6 +139,41 @@ public class MyFrame extends JFrame implements ActionListener {
             }
     }
 }
+    public static void addTask(String taskName, String priority, Date deadline, String taskType) {
+        JPanel taskEntry = new JPanel();
+        taskEntry.setLayout(new BoxLayout(taskEntry, BoxLayout.X_AXIS));
+        taskEntry.setBackground(new Color(40,40,40));
+        taskEntry.setMaximumSize(new Dimension(617, 100));  //making it so that the panel takes 630 px atleast
+        taskEntry.setPreferredSize(new Dimension(617, 100));  //makes it so that the panels dont shrink
+
+        JLabel taskLabel = new JLabel("  Task: " + taskName);
+        taskLabel.setForeground(Color.LIGHT_GRAY);
+        taskLabel.setFont(new Font("Monospaced" , Font.BOLD , 12));
+
+        JLabel priorityLabel = new JLabel("Priority: " + priority);
+        priorityLabel.setForeground(Color.LIGHT_GRAY);
+        priorityLabel.setFont(new Font("Monospaced" , Font.BOLD , 12));
+
+        JLabel deadlineLabel = new JLabel("Deadline: " + deadline);
+        deadlineLabel.setForeground(Color.LIGHT_GRAY);
+        deadlineLabel.setFont(new Font("Monospaced" , Font.BOLD , 12));
+
+        JLabel taskTypeLabel = new JLabel("Task Type: " + taskType);
+        taskTypeLabel.setForeground(Color.LIGHT_GRAY);
+        taskTypeLabel.setFont(new Font("Monospaced" , Font.BOLD , 12));
+
+
+        taskEntry.add(taskLabel);
+        taskEntry.add(Box.createHorizontalStrut(20)); // Spacing
+        taskEntry.add(priorityLabel);
+        taskEntry.add(Box.createHorizontalStrut(20)); // Spacing
+        taskEntry.add(deadlineLabel);
+        taskEntry.add(Box.createHorizontalStrut(20)); // Spacing
+        taskEntry.add(taskTypeLabel);
+        tasksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        tasksPanel.add(taskEntry);
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
