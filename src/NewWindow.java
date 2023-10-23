@@ -26,6 +26,8 @@ public class NewWindow implements ActionListener{
     JRadioButton taskTypeButton3;
     ButtonGroup typeGroup;
     JDatePickerImpl datePicker;
+    JLabel noteLabel;
+    JTextField noteField;
 
     public NewWindow(){
         //========================Labels========================//
@@ -53,6 +55,11 @@ public class NewWindow implements ActionListener{
         taskTypeLabel.setBounds(20 ,108 ,150,30);
         taskTypeLabel.setFont(new Font("Monospaced" , Font.BOLD , 15));
         taskTypeLabel.setForeground(Color.WHITE);
+
+        noteLabel = new JLabel("Note : ");
+        noteLabel.setBounds(20 ,141 ,150,30);
+        noteLabel.setFont(new Font("Monospaced" , Font.BOLD , 15));
+        noteLabel.setForeground(Color.WHITE);
         //========================Labels========================//
 
         //========================Inputs========================//
@@ -62,6 +69,13 @@ public class NewWindow implements ActionListener{
         taskField.setForeground(Color.WHITE);
         taskField.setBackground(Color.BLACK);
         taskField.setCaretColor(Color.WHITE);
+
+        noteField = new JTextField();
+        noteField.setBounds(110,141,190,26);
+        noteField.setFont(new Font("Monospaced" , Font.BOLD , 12));
+        noteField.setForeground(Color.WHITE);
+        noteField.setBackground(Color.BLACK);
+        noteField.setCaretColor(Color.WHITE);
 
         String[] options = {"High","Medium","Low"};
         priorityComboBox = new JComboBox(options);
@@ -119,7 +133,7 @@ public class NewWindow implements ActionListener{
 
         //========================Buttons========================//
         addTaskButton2 = new JButton("Add Task");
-        addTaskButton2.setBounds(117,150,100,30);
+        addTaskButton2.setBounds(117,180,100,30);
         addTaskButton2.setFocusPainted(false);
         addTaskButton2.setFont(new Font("Monospaced" , Font.BOLD , 12));
         addTaskButton2.setForeground(Color.WHITE);
@@ -131,7 +145,7 @@ public class NewWindow implements ActionListener{
         frame2 = new JFrame("Add Task");
         frame2.setVisible(true);
         frame2.setResizable(false);
-        frame2.setSize(345 , 230);
+        frame2.setSize(345 , 260);
         frame2.setLayout(null);
         frame2.getContentPane().setBackground(new Color(40,40,40));
         frame2.add(addTaskButton2);
@@ -146,6 +160,8 @@ public class NewWindow implements ActionListener{
         frame2.add(taskTypeButton1);
         frame2.add(taskTypeButton2);
         frame2.add(taskTypeButton3);
+        frame2.add(noteLabel);
+        frame2.add(noteField);
 
         frame2.addWindowListener(new WindowAdapter() {            //this basically enables the original add task button when this win is closed
             @Override
@@ -168,9 +184,10 @@ public class NewWindow implements ActionListener{
                 MyFrame.taskType = "Personal";
             }
             MyFrame.deadline = (Date) datePicker.getModel().getValue();
+            MyFrame.note = noteField.getText();
             frame2.dispose();
             MyFrame.addTaskButton.setEnabled(true);
-            MyFrame.addTask(MyFrame.task, MyFrame.priority, MyFrame.deadline, MyFrame.taskType);
+            MyFrame.addTask(MyFrame.task, MyFrame.priority, MyFrame.deadline, MyFrame.taskType, MyFrame.note);
         }
     }
 }
