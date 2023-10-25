@@ -36,22 +36,27 @@ Here , to get the deadline input i have used the JDatePicker 1.3.4 (https://sour
 There is no real documentation for this version out there , so i mainly referenced stack overflow posts like (https://stackoverflow.com/questions/26794698/how-do-i-implement-jdatepicker)
 The DateLabelFormatter class just works as a formatter for the date picker.
 After taking the value from the date picker , i convert it into a "day , date , month" format for more readability. (E, d MMM)
+
 ![image](https://github.com/Yash-29-10-2003/prOrganizer/assets/89728102/a642e3a6-60e7-4ff2-abf8-c46b28acf908)
 
 
 **-Clock-**
+
 There is a clock at the top right corner of the main window , for the convenience of checking time with relation to the deadline.
 We basically fetch the current day , date and time from the calendar library and update it every 1000ms using a thread.
 
 ![image](https://github.com/Yash-29-10-2003/prOrganizer/assets/89728102/a0e8b976-cc99-45b6-823c-db38bbd96ebb)
 
 **-Removing tasks-**
+
 Users can either remove individual tasks using the remove button present on each task or clear all tasks using the clear all button .
 
 **-Editting Individual Tasks-**
+
 We can edit individual tasks by clicking on the edit button on each task.
 It basically deletes the original task and opens a new add task window with pre set values from the original task, the user can edit the task and add it.
 Couldnt get the date to work here.
 
 **-Progress Bar-**
+
 A progress bar is present that keeps track of how many tasks are present vs how many tasks present are completed , it updates whenever a task is removed / added or completed.
