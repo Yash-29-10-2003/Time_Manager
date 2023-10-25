@@ -14,20 +14,20 @@ import java.text.SimpleDateFormat;
 public class NewWindow implements ActionListener{
     JFrame frame2 ;
     JButton addTaskButton2;
-    JTextField taskField;
+    public static JTextField taskField;
     JLabel taskNameLabel;
     JLabel priorityLabel;
     JLabel deadlineLabel;
-    JComboBox priorityComboBox;
+    public static JComboBox priorityComboBox;
     JLabel requiredLabel;
     JLabel taskTypeLabel;
-    JRadioButton taskTypeButton1;
-    JRadioButton taskTypeButton2;
-    JRadioButton taskTypeButton3;
+    public static JRadioButton taskTypeButton1;
+    public static JRadioButton taskTypeButton2;
+    public static JRadioButton taskTypeButton3;
     ButtonGroup typeGroup;
-    JDatePickerImpl datePicker;
+    public static JDatePickerImpl datePicker;
     JLabel noteLabel;
-    JTextField noteField;
+    public static JTextField noteField;
 
     public NewWindow(){
         //========================Labels========================//
@@ -85,21 +85,21 @@ public class NewWindow implements ActionListener{
         priorityComboBox.setForeground(Color.WHITE);
         priorityComboBox.addActionListener(this);
 
-        taskTypeButton1 = new JRadioButton("Work");
+        taskTypeButton1 = new JRadioButton("New");
         taskTypeButton1.setBounds(80,108,70,30);
         taskTypeButton1.setFont(new Font("Monospaced" , Font.BOLD , 12));
         taskTypeButton1.setBackground(new Color(40,40,40));
         taskTypeButton1.setForeground(Color.WHITE);
         taskTypeButton1.addActionListener(this);
 
-        taskTypeButton2 = new JRadioButton("School");
+        taskTypeButton2 = new JRadioButton("Debug");
         taskTypeButton2.setBounds(150,108,80,30);
         taskTypeButton2.setFont(new Font("Monospaced" , Font.BOLD , 12));
         taskTypeButton2.setBackground(new Color(40,40,40));
         taskTypeButton2.setForeground(Color.WHITE);
         taskTypeButton2.addActionListener(this);
 
-        taskTypeButton3 = new JRadioButton("Personal");
+        taskTypeButton3 = new JRadioButton("Refactor");
         taskTypeButton3.setBounds(230,108,100,30);
         taskTypeButton3.setFont(new Font("Monospaced" , Font.BOLD , 12));
         taskTypeButton3.setBackground(new Color(40,40,40));
@@ -142,9 +142,10 @@ public class NewWindow implements ActionListener{
         //========================Buttons========================//
 
 
-        frame2 = new JFrame("Add Task");
+        frame2 = new JFrame("Task");
         frame2.setVisible(true);
         frame2.setResizable(false);
+        frame2.setIconImage(MyFrame.titleImage.getImage());
         frame2.setSize(345 , 260);
         frame2.setLayout(null);
         frame2.getContentPane().setBackground(new Color(40,40,40));
@@ -177,11 +178,11 @@ public class NewWindow implements ActionListener{
             MyFrame.task = taskField.getText();
             MyFrame.priority = (String) priorityComboBox.getSelectedItem();
             if (taskTypeButton1.isSelected()) {
-                MyFrame.taskType = "Work";
+                MyFrame.taskType = "New";
             } else if (taskTypeButton2.isSelected()) {
-                MyFrame.taskType = "School";
+                MyFrame.taskType = "Debug";
             } else if (taskTypeButton3.isSelected()) {
-                MyFrame.taskType = "Personal";
+                MyFrame.taskType = "Refactor";
             }
             MyFrame.deadline = (Date) datePicker.getModel().getValue();
             MyFrame.note = noteField.getText();

@@ -8,7 +8,7 @@ import java.util.Date;
 
 //Main Screen of the Application
 public class MyFrame extends JFrame implements ActionListener {
-    ImageIcon titleImage = new ImageIcon("Assets/bigclocka.png");
+    public static ImageIcon titleImage = new ImageIcon("Assets/bigclocka.png");
     JPanel headingPanel;
     JLabel headingLabel;
     JPanel clockPanel;
@@ -125,7 +125,7 @@ public class MyFrame extends JFrame implements ActionListener {
         //========================Progress========================//
 
 
-        this.setTitle("Time Manager");
+        this.setTitle("prOrganizer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setSize(750 , 750);
@@ -228,8 +228,15 @@ public class MyFrame extends JFrame implements ActionListener {
         removeButton.setFont(new Font("Monospaced" , Font.BOLD , 12));
         removeButton.setBackground(Color.BLACK);
         removeButton.setForeground(Color.LIGHT_GRAY);
-        removeButton.setSize(150,30);
+        removeButton.setBounds(4,10,77,30);
         removeButton.setFocusPainted(false);
+
+        JButton editButton = new JButton("Edit");
+        editButton.setFont(new Font("Monospaced" , Font.BOLD , 12));
+        editButton.setBackground(Color.BLACK);
+        editButton.setForeground(Color.LIGHT_GRAY);
+        editButton.setBounds(4,50,77,30);
+        editButton.setFocusPainted(false);
 
         removeButton.addActionListener(new ActionListener() {
             @Override
@@ -245,10 +252,43 @@ public class MyFrame extends JFrame implements ActionListener {
             }
         });
 
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tasksPanel.remove(taskEntry);
+                tasksPanel.revalidate();
+                tasksPanel.repaint();
+                totalTasks -= 1;
+                if(checkBox.isSelected()){
+                    tasksDone -=1;
+                }
+                updateProgressBar();
+                addTaskButton.doClick();
+                NewWindow.taskField.setText(taskName);
+                NewWindow.priorityComboBox.setSelectedItem(priority);
+                NewWindow.noteField.setText(note);
+                if (taskType == "New") {
+                    NewWindow.taskTypeButton1.setSelected(true);
+                } else if (taskType == "Debug") {
+                    NewWindow.taskTypeButton2.setSelected(true);
+                } else if (taskType == "Refactor") {
+                    NewWindow.taskTypeButton3.setSelected(true);
+                }
+                //NewWindow.datePicker.getModel().setDate(date.getDate(),date.getMonth(),date.getYear());
+                //this datePicker method for some reason doesn't work , for now ill just skip the deadline ..
+            }
+        });
+
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(null);
         infoPanel.setBounds(0,0,500,100);
+        infoPanel.setPreferredSize(new Dimension(500,100));
         infoPanel.setBackground(Color.BLACK);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(null);
+        buttonsPanel.setPreferredSize(new Dimension(50,100));
+        buttonsPanel.setBackground(Color.GRAY);
 
         infoPanel.add(taskLabel);
         infoPanel.add(priorityLabel);
@@ -258,8 +298,11 @@ public class MyFrame extends JFrame implements ActionListener {
         infoPanel.add(doneLabel);
         infoPanel.add(checkBox);
 
+        buttonsPanel.add(removeButton);
+        buttonsPanel.add(editButton);
+
         taskEntry.add(infoPanel);
-        taskEntry.add(removeButton);
+        taskEntry.add(buttonsPanel);
         tasksPanel.add(taskEntry);
         totalTasks += 1;
         updateProgressBar();
@@ -277,7 +320,6 @@ public class MyFrame extends JFrame implements ActionListener {
         int progress = (int)((double) tasksDone / totalTasks * 100);
         bar.setValue(progress);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addTaskButton){
